@@ -24,7 +24,7 @@ function App() {
           <Route element={<PrivateRoutes element={<Layout />} />}>
             <Route path="/chatApp" element={<ChatApp />} />
           </Route>
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signUp" element={<LoginPage />} />
           <Route path="*" element={<Error404 />} />

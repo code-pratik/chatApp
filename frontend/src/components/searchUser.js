@@ -4,7 +4,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { searchUsers } from "../pages/chatApp/chatSlice";
 import useDebounce from "../hook/useDebounce";
 
-const SearchUser = ({ show }) => {
+const SearchUser = ({ show, placeholder }) => {
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const debouncedSearchValue = useDebounce(search, 2000);
@@ -30,7 +30,7 @@ const SearchUser = ({ show }) => {
         type="text"
         value={search}
         onChange={handleSearch}
-        placeholder="Search"
+        placeholder={placeholder}
         className={`w-full h-full rounded-full px-4 outline-none bg-[#F9F9F9] text-black placeholder:text-black placeholder:opacity-60 placeholder:text-sm xs:${
           show ? "block" : "hidden"
         }`}

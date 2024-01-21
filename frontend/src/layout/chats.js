@@ -43,7 +43,10 @@ const ChatsList = ({ handleWindow }) => {
   return (
     <div className="w-full h-full bg-white dark:bg-black dark:text-white">
       <div className="w-full h-[7%] justify-between px-4 flex">
-        <SearchUser show="block" />
+        <SearchUser
+          show="block"
+          placeholder={groupList ? "Not search for Group" : "search Users"}
+        />
         <button
           className="flex justify-center items-center gap-1 "
           onClick={() => setGroupList(!groupList)}
@@ -52,12 +55,12 @@ const ChatsList = ({ handleWindow }) => {
             <>
               {" "}
               <GroupIcon fontSize="medium" />
-              <span className="text-xs">Groups</span>
+              <span className="text-xs">Persons</span>
             </>
           ) : (
             <>
               <PersonIcon fontSize="medium" />
-              <span className="text-xs">Person</span>
+              <span className="text-xs">Groups</span>
             </>
           )}
         </button>

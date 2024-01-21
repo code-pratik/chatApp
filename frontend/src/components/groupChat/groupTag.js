@@ -15,7 +15,10 @@ export default function GroupTags() {
   const [search, setSearch] = useState("");
   const data = useSelector((state) => state.user.user);
   const [selectedTags, setSelectedTags] = useState([]);
-  const [formValues, setFormValues] = useState({});
+  const [formValues, setFormValues] = useState({
+    groupName: "",
+    groupDescription: "",
+  });
   const dispatch = useDispatch();
   const users = useSelector((state) => state.chats?.users);
   const [imageData, setImageData] = useState({
@@ -35,8 +38,19 @@ export default function GroupTags() {
 
   const imageUpload = async (e) => {
     const file = e.target.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    if (file.size > 1024 * 1024) {
+      toast.error("File size should be less than 1MB");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", file);
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
@@ -60,7 +74,30 @@ export default function GroupTags() {
         .includes(search.toLowerCase())
     ) || [];
 
+  const validateForm = () => {
+    if (!formValues.groupName || !formValues.groupDescription) {
+      toast.error("Please fill in all required fields");
+      return false;
+    }
+
+    if (selectedTags.length === 0) {
+      toast.error("Please select at least one group member");
+      return false;
+    }
+
+    if (!imageData.base64textString) {
+      toast.error("Please select a group image");
+      return false;
+    }
+
+    return true;
+  };
+
   const createGroup = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
     const users = [];
     selectedTags.map((item) => {
       users.push(item.value);
@@ -71,9 +108,10 @@ export default function GroupTags() {
       imageData,
       messages: [],
     };
+
     try {
       const res = await axios.post(
-        "http://localhost:8081/api/chat/group",
+        `${process.env.REACT_APP_BACKEND_URL}/api/chat/group`,
         datas,
         {
           headers: {
@@ -85,7 +123,7 @@ export default function GroupTags() {
         groupName: "",
         groupDescription: "",
       });
-      toast.success("Group created  successfully ", {
+      toast.success("Group created successfully ", {
         position: toast.POSITION.TOP_RIGHT,
       });
       dispatch(handleGroupForm(false));
@@ -200,13 +238,6 @@ export default function GroupTags() {
           />
         </div>
       </div>
-
-      {/* <button  className="absolute -top-2 right-6 bg-[#15172B] text-white rounded-full px-2 py-2" onClick={handelGroup}>
-          <AddOutlinedIcon sx={{
-            width:"30px",
-            height:"30px"
-          }}/>
-        </button> */}
 
       <button
         className=" bg-white w-[40%] mt-8  text-black rounded-full px-4 py-2"

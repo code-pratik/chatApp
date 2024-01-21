@@ -19,6 +19,7 @@ import { loginFormTheme } from "../../theme/formTheme";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Helmet } from "react-helmet";
 
 export const LoginPage = () => {
   const location = useLocation();
@@ -56,7 +57,6 @@ export const LoginPage = () => {
 
   const handleSignUp = async (formData) => {
     try {
-      console.log(formData);
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/auth/signUp`,
         formData
@@ -92,6 +92,9 @@ export const LoginPage = () => {
   return (
     <div className="w-screen h-screen bg-[#2F3349] px-12  flex  justify-between  items-center ">
       <ToastContainer />
+      <Helmet>
+        <title>ChatApp | Login</title>
+      </Helmet>
       <div className="hidden lg:w-[60%] h-[95%] p-24 lg:flex flex-col justify-center bg-[#25293C] items-center relative  rounded-3xl">
         <img src={login} alt="" className="h-[65%] absolute" />
         <img

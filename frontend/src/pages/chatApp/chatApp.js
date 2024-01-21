@@ -238,7 +238,7 @@ export const ChatApp = () => {
                         <div className="flex items-center gap-2">
                           <ProfileImage
                             src={
-                              "http://localhost:8081" +
+                              process.env.REACT_APP_BACKEND_URL +
                               (profileImage === null
                                 ? user?.profileimg?.replaceAll("public", "")
                                 : profileImage)
@@ -270,7 +270,9 @@ export const ChatApp = () => {
                             .map((user) => (
                               <>
                                 <ProfileImage
-                                  src={`http://localhost:8081${user?.profileimg?.replaceAll(
+                                  src={`${
+                                    process.env.REACT_APP_BACKEND_URL
+                                  }${user?.profileimg?.replaceAll(
                                     "public",
                                     ""
                                   )}`}

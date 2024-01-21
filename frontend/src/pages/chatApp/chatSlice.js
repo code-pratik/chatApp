@@ -93,8 +93,6 @@ export const createGroupChat = createAsyncThunk(
           },
         }
       );
-
-      console.log(response, "adkadhkajhd");
     } catch (error) {
       return error;
     }
@@ -154,7 +152,6 @@ const chatSlice = createSlice({
         }
       })
       .addCase(createActiveChat.fulfilled, (state, action) => {
-        console.log(action.payload, "pay");
         state.activeChat = action.payload.data;
         state.group = action.payload?.flag;
       });
