@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+.page_404 {
+  padding: 40px 0;
+  background: #fff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "Arvo", serif;
+}
+
+.page_404 img {
+  width: 100%;
+}
+
+.four_zero_four_bg {
+  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.four_zero_four_bg h1 {
+  font-size: 80px;
+}
+
+.four_zero_four_bg h3 {
+  font-size: 80px;
+}
+
+.link_404 {
+  color: #fff !important;
+  padding: 10px 20px;
+  background: #39ac31;
+  margin: 20px 0;
+  display: inline-block;
+}
+.contant_box_404 {
+  margin-top: -50px;
+}
+
+.Toastify__toast-container {
+  font-size: 14px;
+  /* Add other styles as needed */
+}
+
+.Toastify__toast {
+  font-size: 14px;
+  /* Add other styles as needed */
+}
+
+.react-input-emoji--input {
+  font-weight: 400;
+  max-height: 40px;
+  min-height: 20px;
+  overflow-x: hidden;
+  user-select: text;
+  padding: 9px 12px 11px;
+  text-align: left;
+}
