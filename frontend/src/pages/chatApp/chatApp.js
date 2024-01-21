@@ -15,14 +15,13 @@ import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 import { getDatabase } from "firebase/database";
 import { useEffect } from "react";
 import { createChat, createGroupChat, setChats } from "./chatSlice";
-
 import { app } from "../../firebase";
 import moment from "moment";
 import { Button } from "@mui/material";
 import GroupForm from "../../components/groupChat/groupForm";
 import WestIcon from "@mui/icons-material/West";
-import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 export const ChatApp = () => {
   const [message, setMessage] = useState("");
@@ -132,6 +131,9 @@ export const ChatApp = () => {
     <>
       {openChat ? (
         <div className="lg:w-[70%] md:w-[61%] xl:w-[75%] h-[90%] flex flex-row dark:bg-black dark:text-white border-t-2">
+          <Helmet>
+            <title>ChatApp</title>
+          </Helmet>
           <ToastContainer />
           <div className=" relative  w-[100%] flex flex-col ">
             <GroupForm />
@@ -178,7 +180,7 @@ export const ChatApp = () => {
                         <div className="flex items-center gap-2">
                           <ProfileImage
                             src={
-                              "http://localhost:8081" +
+                              process.env.REACT_APP_BACKEND_URL +
                               (profileImage === null
                                 ? user?.profileimg?.replaceAll("public", "")
                                 : profileImage)

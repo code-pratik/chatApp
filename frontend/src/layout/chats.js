@@ -60,24 +60,30 @@ const ChatsList = ({ handleWindow }) => {
 
       <div className="h-[88%] md:h-[90.9%] xl:h-[91.9%] dark:bg-black overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
         {!groupList ? (
-          users
-            ?.filter((item) => item["_id"] !== data["_id"])
-            ?.map((user, index) => (
-              <PersonChatCard
-                src={
-                  "http://localhost:8081" +
-                  user?.profileimg?.replaceAll("public", "")
-                }
-                key={index}
-                name={user?.firstName + " " + user?.lastName}
-                profileDescription={user?.description}
-                handleWindow={handleWindow}
-                email={user?.email}
-                lastActive="11:00 PM"
-                handleChat={handelChat}
-                id={user["_id"]}
-              />
-            ))
+          users.length > 0 ? (
+            users
+              ?.filter((item) => item["_id"] !== data["_id"])
+              ?.map((user, index) => (
+                <PersonChatCard
+                  src={
+                    process.env.REACT_APP_BACKEND_URL +
+                    user?.profileimg?.replaceAll("public", "")
+                  }
+                  key={index}
+                  name={user?.firstName + " " + user?.lastName}
+                  profileDescription={user?.description}
+                  handleWindow={handleWindow}
+                  email={user?.email}
+                  lastActive="11:00 PM"
+                  handleChat={handelChat}
+                  id={user["_id"]}
+                />
+              ))
+          ) : (
+            <p className="h-full flex items-center justify-center">
+              No User for Chats
+            </p>
+          )
         ) : groupData.length > 0 ? (
           groupData
             .map((item) => {

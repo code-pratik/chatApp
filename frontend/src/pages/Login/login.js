@@ -57,7 +57,7 @@ export const LoginPage = () => {
   const handleSignUp = async (formData) => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/auth/signUp`,
+        `${process.env.REACT_APP_BACKEND_URL}://localhost:8081/api/auth/signUp`,
         formData
       );
       toast.success(response.data.message);
@@ -161,7 +161,7 @@ export const LoginPage = () => {
                 </FormGroup>
               ))}
 
-              {location.pathname === "/signup" && (
+              {location.pathname !== "/signup" && (
                 <FormGroup>
                   <InputLabel
                     sx={{

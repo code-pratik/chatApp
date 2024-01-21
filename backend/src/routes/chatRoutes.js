@@ -1,12 +1,15 @@
-import express from "express"
-import { addMessagesGroup, createGrouporUpdate, createOrUpdateChat } from "../controllers/chatController.js"
+import express from "express";
+import {
+  addMessagesGroup,
+  createGrouporUpdate,
+  createOrUpdateChat,
+} from "../controllers/chatController.js";
+import { auth } from "../middleware/jwtMiddleware.js";
 
+const chatRoute = express.Router();
 
-const chatRoute = express()
+chatRoute.patch("/createChat/:chatId", auth, createOrUpdateChat);
+chatRoute.post("/group", auth, createGrouporUpdate);
+chatRoute.patch("/addMessagesGroup/:id", auth, addMessagesGroup);
 
-chatRoute.patch("/createChat/:chatId",createOrUpdateChat)
-chatRoute.post("/group",createGrouporUpdate)
-chatRoute.patch("/addMessagesGroup/:id",addMessagesGroup)
-
-
-export const chatRoutes =  chatRoute
+export const chatRoutes = chatRoute;

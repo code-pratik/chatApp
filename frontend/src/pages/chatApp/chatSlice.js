@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const getUsers = createAsyncThunk("/api/data/users", async () => {
   try {
@@ -52,6 +53,11 @@ export const createChat = createAsyncThunk(
           },
           createdBy: req.id[0],
           updatedBy: req.id[0],
+        },
+        {
+          headers: {
+            Authorization: Cookies.get("authToken"),
+          },
         }
       );
     } catch (error) {

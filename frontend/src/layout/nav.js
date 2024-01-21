@@ -29,12 +29,10 @@ const Nav = () => {
   };
 
   return (
-    <div className="h-[10%] box-border bg-[#15172B] flex items-center justify-between px-4 py-2 shadow-sm">
-      <div className="text-2xl text-white hidden md:flex">
-        {/* Adjust the styling of the ChatApp logo */}
+    <div className="h-[10%] box-borde  bg-[#F5F5F5] dark:bg-[#15172B] flex items-center justify-between px-4 py-2 shadow-sm">
+      <div className="text-2xl dark:text-white hidden md:flex">
         <span style={{ fontWeight: "bold", fontSize: "1.5rem" }}>ChatApp</span>
       </div>
-      {/* Show menu icon on smaller screens */}
       <div
         className="text-2xl text-white md:hidden cursor-pointer"
         onClick={() => {

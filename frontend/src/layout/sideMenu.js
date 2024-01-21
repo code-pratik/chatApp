@@ -13,6 +13,7 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { ExitToAppOutlined } from "@mui/icons-material";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const SideMenu = () => {
   const data = useSelector((state) => state.user.user);
   const menuFlag = useSelector((state) => state.chats?.flag);
@@ -21,9 +22,21 @@ const SideMenu = () => {
   const dispatch = useDispatch();
 
   const imageUpload = async (e) => {
-    const formData = new FormData();
-    formData.append("file", e.target.files[0]);
-    dispatch(updateUserProfileImage({ id: data["_id"], data: formData }));
+    const file = e.target.files[0];
+
+    if (file) {
+      const maxSizeInBytes = 2 * 1024 * 1024;
+
+      if (file.size > maxSizeInBytes) {
+        toast.error("Image size must be less than 2MB.");
+        e.target.value = null;
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", file);
+      dispatch(updateUserProfileImage({ id: data["_id"], data: formData }));
+    }
   };
 
   const theme = useSelector((state) => state.chats?.theme);
@@ -63,7 +76,7 @@ const SideMenu = () => {
         <span className="relative">
           <img
             src={
-              "http://localhost:8081" +
+              process.env.REACT_APP_BACKEND_URL +
               (profileImage === null
                 ? data?.profileimg?.replaceAll("public", "")
                 : profileImage)
@@ -78,6 +91,7 @@ const SideMenu = () => {
               name="profileimg"
               className="hidden"
               onChange={imageUpload}
+              accept=".jpg, .jpeg"
             />
             <label for="file">
               <span className="bg-white p-1 rounded-full relative flex items-center justify-center">
