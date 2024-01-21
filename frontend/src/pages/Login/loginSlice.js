@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 export const loginUser = createAsyncThunk("auth/login", async (userData) => {
   try {
     const response = await axios.post(
-      `http://localhost:8081/api/auth/login`,
+      `${process.env.REACT_APP_BACKEND_URL}/api/auth/login`,
       userData
     );
     Cookies.set(
@@ -22,9 +22,8 @@ export const updateUserProfileImage = createAsyncThunk(
   "profile/updateProfile",
   async (userData) => {
     try {
-      console.log(userData, "adskjahd");
       const response = await axios.patch(
-        `http://localhost:8081/api/data/updateProfile/${userData?.id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/data/updateProfile/${userData?.id}`,
         userData?.data
       );
       return response.data.data.profileimg.replaceAll("public", "");
@@ -34,9 +33,6 @@ export const updateUserProfileImage = createAsyncThunk(
   }
 );
 
-// export const signupUser = createAsyncThunk("aauth/signUp",async(data)=>{
-
-// })
 const initialState = {
   user: {},
   profileImg: null,
@@ -57,11 +53,6 @@ export const loginSlice = createSlice({
       state.profileImg = action.payload;
     });
   },
-  // extraReducers: {
-  //   [loginUser.fulfilled]: (state, action) => {
-  //     state.user = [...state.user, action.payload];
-  //   },
-  // },
 });
 
 export const { logIn } = loginSlice.actions;

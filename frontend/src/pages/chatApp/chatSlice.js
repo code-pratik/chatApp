@@ -3,7 +3,9 @@ import axios from "axios";
 
 export const getUsers = createAsyncThunk("/api/data/users", async () => {
   try {
-    const response = await axios.get("http://localhost:8081/api/data/users");
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND_URL}/api/data/users`
+    );
     return response.data.data.users;
   } catch (error) {
     return error;
@@ -15,7 +17,7 @@ export const searchUsers = createAsyncThunk(
   async (searchValue) => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/api/data/searchUser/?search=${searchValue.value}`
+        `${process.env.REACT_APP_BACKEND_URL}/api/data/searchUser/?search=${searchValue.value}`
       );
       return { data: response?.data?.data.users, flag: searchValue.flag };
     } catch (error) {
@@ -40,7 +42,7 @@ export const createChat = createAsyncThunk(
   async (req) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8081/api/chat/createChat/${req.id[0]}+${req.id[1]}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/chat/createChat/${req.id[0]}+${req.id[1]}`,
         {
           users: req.id,
           message: {
@@ -63,7 +65,7 @@ export const createGroupChat = createAsyncThunk(
   async (req) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8081/api/chat/addMessagesGroup/${req.chatId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/chat/addMessagesGroup/${req.chatId}`,
         {
           message: req.data,
           createdBy: req.id,
