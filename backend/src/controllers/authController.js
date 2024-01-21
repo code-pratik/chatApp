@@ -7,7 +7,6 @@ import { resConstants } from "../constants/errorMessages.js";
 export const signUp = async (req, res) => {
   try {
     const { email, password, firstName, lastName, phoneNo } = req.body;
-
     if ((await User.findOne({ email: email })) !== null) {
       return res.status(409).json({ error: "Email Taken!" });
     }
@@ -51,14 +50,18 @@ export const login = async (req, res) => {
     const tokenPayload = {
       email: userData.email,
       id: userData.id,
-      exp: 24 * 60 * 60 * 1000 * 7,
+      exp: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60,
     };
-    const accessToken = await jwt.sign(tokenPayload, process.env.JWTPRIVATEKEY);
+
+    const accessToken = await jwt.sign(
+      tokenPayload,
+      process.env.JWTPRIVATEKEY,
+      {
+        algorithm: "HS256",
+      }
+    );
+
     res.header("Authorization", `Bearer ${accessToken}`);
-
-    // const token = `Bearer ${accessToken}`
-
-    // res.cookie("authToken", token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true })
 
     const { password, ...otherData } = userData.toObject();
 

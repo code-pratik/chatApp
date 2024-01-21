@@ -10,15 +10,15 @@ export const PrivateRoutes = ({ element }) => {
 
   try {
     const decodedToken = authToken.split(".")[1];
-    const expirationTime = JSON.parse(atob(decodedToken)).exp;
-
-    if (!(expirationTime < Date.now() / 1000)) {
+    const decodedPayload = JSON.parse(atob(decodedToken));
+    console.log(decodedPayload);
+    const expirationTime = decodedPayload.exp;
+    if (!(expirationTime > Math.floor(Date.now() / 1000))) {
       return <Navigate to="/login" />;
     }
   } catch (error) {
     console.error("Token decoding error:", error);
     return <Navigate to="/login" />;
   }
-
   return element;
 };

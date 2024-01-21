@@ -301,21 +301,22 @@ export const ChatApp = () => {
                 e.preventDefault();
                 chatType ? handleGroupChat() : handleChat();
               }}
-              className="h-[14%] dark:bg-black border-t-2 bg-white flex relative items-center px-4 pr-16 justify-between text-black"
+              className="h-[14%] dark:bg-black border-t-2 bg-white flex relative items-center px-4  justify-between text-black"
             >
               <FontAwesomeIcon
                 icon={faPaperclip}
                 className="absolute left-11 opacity-40"
               />
-              <InputEmoji
-                value={message}
-                onChange={setMessage}
-                cleanOnEnter
-                onEnter={chatType ? handleGroupChat : handleChat}
-                placeholder="Type a message"
-                className=" p-4 border border-gray-300 rounded-md"
-              />
-
+              <div className="w-[90%]">
+                <InputEmoji
+                  value={message}
+                  onChange={setMessage}
+                  cleanOnEnter
+                  onEnter={chatType ? handleGroupChat : handleChat}
+                  placeholder="Type a message"
+                  className=" p-4 border border-gray-300 rounded-md"
+                />
+              </div>
               <Button
                 type="submit"
                 className="absolute flex items-center z-[99]  opacity-70 -rotate-45"

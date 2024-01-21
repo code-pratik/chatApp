@@ -5,7 +5,12 @@ import Cookies from "js-cookie";
 export const getUsers = createAsyncThunk("/api/data/users", async () => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}/api/data/users`
+      `${process.env.REACT_APP_BACKEND_URL}/api/data/users`,
+      {
+        headers: {
+          Authorization: Cookies.get("authToken"),
+        },
+      }
     );
     return response.data.data.users;
   } catch (error) {
@@ -18,7 +23,12 @@ export const searchUsers = createAsyncThunk(
   async (searchValue) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/api/data/searchUser/?search=${searchValue.value}`
+        `${process.env.REACT_APP_BACKEND_URL}/api/data/searchUser/?search=${searchValue}`,
+        {
+          headers: {
+            Authorization: Cookies.get("authToken"),
+          },
+        }
       );
       return { data: response?.data?.data.users, flag: searchValue.flag };
     } catch (error) {
@@ -76,6 +86,11 @@ export const createGroupChat = createAsyncThunk(
           message: req.data,
           createdBy: req.id,
           updatedBy: "",
+        },
+        {
+          headers: {
+            Authorization: Cookies.get("authToken"),
+          },
         }
       );
 

@@ -56,8 +56,9 @@ export const LoginPage = () => {
 
   const handleSignUp = async (formData) => {
     try {
+      console.log(formData);
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}://localhost:8081/api/auth/signUp`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/auth/signUp`,
         formData
       );
       toast.success(response.data.message);

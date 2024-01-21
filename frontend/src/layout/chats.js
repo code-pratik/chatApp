@@ -33,7 +33,13 @@ const ChatsList = ({ handleWindow }) => {
     );
     return () => unsubscribeFirestore();
   }, [firestore, dispatch]);
-
+  const groups = groupData
+    .map((item) => {
+      return item.group;
+    })
+    .filter((item) => {
+      return item.groupUsers?.includes(data["_id"]);
+    });
   return (
     <div className="w-full h-full bg-white dark:bg-black dark:text-white">
       <div className="w-full h-[7%] justify-between px-4 flex">
@@ -60,7 +66,7 @@ const ChatsList = ({ handleWindow }) => {
 
       <div className="h-[88%] md:h-[90.9%] xl:h-[91.9%] dark:bg-black overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
         {!groupList ? (
-          users.length > 0 ? (
+          users?.length > 0 ? (
             users
               ?.filter((item) => item["_id"] !== data["_id"])
               ?.map((user, index) => (
@@ -81,32 +87,33 @@ const ChatsList = ({ handleWindow }) => {
               ))
           ) : (
             <p className="h-full flex items-center justify-center">
-              No User for Chats
+              No User for Chat
             </p>
           )
-        ) : groupData.length > 0 ? (
-          groupData
-            .map((item) => {
-              return item.group;
-            })
-            .filter((item) => {
-              return item.groupUsers?.includes(data["_id"]);
-            })
-            .map(({ groupName, groupDescription, id, imageData }, index) => (
-              <PersonChatCard
-                src={imageData?.base64textString}
-                name={groupName}
-                key={index}
-                id={groupData[index].id}
-                handleWindow={handleWindow}
-                handleChat={handelChat}
-                type={true}
-                profileDescription={groupDescription}
-                lastActive="11:00 PM"
-              />
-            ))
+        ) : groupData?.length > 0 ? (
+          groups.length > 0 ? (
+            groups.map(
+              ({ groupName, groupDescription, id, imageData }, index) => (
+                <PersonChatCard
+                  src={imageData?.base64textString}
+                  name={groupName}
+                  key={index}
+                  id={groupData[index].id}
+                  handleWindow={handleWindow}
+                  handleChat={handelChat}
+                  type={true}
+                  profileDescription={groupDescription}
+                  lastActive="11:00 PM"
+                />
+              )
+            )
+          ) : (
+            <p className="h-full flex items-center justify-center text-black dark:text-white">
+              No Group Joined
+            </p>
+          )
         ) : (
-          <p className="h-full flex items-center justify-center">
+          <p className="h-full flex items-center justify-center  text-black dark:text-white">
             No Group Joined
           </p>
         )}

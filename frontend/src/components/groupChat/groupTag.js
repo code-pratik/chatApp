@@ -9,6 +9,7 @@ import axios from "axios";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import { ToastContainer, toast } from "react-toastify";
 import { handleGroupForm } from "../../pages/chatApp/chatSlice";
+import Cookies from "js-cookie";
 
 export default function GroupTags() {
   const [search, setSearch] = useState("");
@@ -16,7 +17,7 @@ export default function GroupTags() {
   const [selectedTags, setSelectedTags] = useState([]);
   const [formValues, setFormValues] = useState({});
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.chats.users);
+  const users = useSelector((state) => state.chats?.users);
   const [imageData, setImageData] = useState({
     base64textString: "",
     imageName: "",
@@ -52,11 +53,12 @@ export default function GroupTags() {
     };
   };
 
-  const filteredUsers = users.filter((user) =>
-    `${user.firstName} ${user.lastName}`
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
+  const filteredUsers =
+    users?.filter((user) =>
+      `${user.firstName} ${user.lastName}`
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    ) || [];
 
   const createGroup = async () => {
     const users = [];
@@ -72,7 +74,12 @@ export default function GroupTags() {
     try {
       const res = await axios.post(
         "http://localhost:8081/api/chat/group",
-        datas
+        datas,
+        {
+          headers: {
+            Authorization: Cookies.get("authToken"),
+          },
+        }
       );
       setFormValues({
         groupName: "",
@@ -94,7 +101,7 @@ export default function GroupTags() {
       <ToastContainer />
 
       <label>Group Name</label>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 ">
         <TextField
           type="text"
           name="groupName"
@@ -152,7 +159,7 @@ export default function GroupTags() {
                   id="file1"
                   name="profileimge"
                   className="hidden"
-                  accept="image/*"
+                  accept=".jpg, .jpeg"
                   onChange={imageUpload}
                 />
                 <label for="file1">
